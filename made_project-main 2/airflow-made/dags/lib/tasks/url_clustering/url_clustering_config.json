@@ -1,0 +1,32 @@
+{
+  "PAGES_FILE_PATH": "parser/pages.json",
+  "PAGES_OUTPUT_PATH": "data/output",
+  "BERT_MODEL_DIRECTORY_PATH": "rubert-tiny",
+  "OUTPUT_DIRECTORY_PATH": "data/output/clustering",
+  "SAVE_ARTEFACTS": true,
+  "URLClustering": {
+    "init": {
+      "reduce_emb_dim": true,
+      "new_emb_dim": 5,
+      "random_state": 0,
+      "save_artefacts": true
+    },
+    "plot_url_dendrogram": {
+      "truncate_mode": "level",
+      "p": 6
+    }
+  },
+  "TopicExtractor": {
+    "init": {
+      "top_n_words": 3,
+      "random_state": 0,
+      "save_artefacts": true
+    }
+  },
+  "TopicClassifier": {
+      "init": {
+        "random_state": 0,
+        "save_artefacts": true
+      }
+  }
+}

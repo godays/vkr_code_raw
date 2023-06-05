@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+
+<html lang="ru">
+    <head>
+        <title>Система предсказания интересов пользователя к категориям товаров и услуг</title>
+        <link rel="icon" href="./static/favicon_vk_bigdata.png">
+
+        <!-- Bootstrap core CSS -->
+        <link href="./static/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">       
+        <meta name="theme-color" content="#7952b3">
+
+        <script src="./static/bootstrap.bundle.min.js"></script>
+
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+            }
+
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+                }
+            }
+
+            .first_img {
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-image: url(./static/clustering.png);
+            }
+
+            .second_img {
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-image: url(./static/tpr-fpr.png);
+            }
+
+            .third_img {
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-image: url(./static/airflow.png);
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <header>
+
+
+            <div class="navbar navbar-dark bg-dark shadow-sm">
+              <div class="container">
+                <a href="https://getbootstrap.su/docs/5.0/examples/album/#" class="navbar-brand d-flex align-items-center">
+                  <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-target"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                  <strong>Подбор таргетов</strong>
+                </a>
+              </div>
+            </div>
+        </header>
+
+
+
+        <main>
+
+          <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+              <div class="col-lg-6 col-md-8 mx-auto">
+
+                <h1 class="fw-light">Небольшое демо</h1>
+                <p class="lead text-muted">К сожалению, у нас мало интерактивных компонентов в системе. Однако мы выбрали самые интерактивные!.</p>
+                
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Ссылка -> таргет</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Текст -> таргет</button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                  
+                    <form class="row row-cols-lg-auto g-3 align-items-center" method="GET">
+                      <div class="col-12">
+                        <p>Здесь можно определить по ссылке соответствующий таргет</p>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-group">
+                          <div class="input-group-text">
+                            @
+                          </div>
+                          <input type="text" class="form-control" id="url" name="url" placeholder="type url">
+                        </div>
+                      </div>
+                    
+                      <div class="col-12">
+                        {% if predict %}
+                          <p>Близкий таргет: {{ predict }}</p>
+                        {% else %}
+                          <p>&nbsp;</p>
+                        {% endif %}
+                      </div>
+
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Найти</button>
+                      </div>
+                    </form>
+
+                  </div>
+                  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+                    <form class="row row-cols-lg-auto g-3 align-items-center" method="GET">
+                      <div class="col-12">
+                        <p>Здесь можно определить по тексту соответствующий таргет</p>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-group">
+                          <div class="input-group-text">
+                            Aa
+                          </div>
+                          <input type="text" class="form-control" id="text" name="text" placeholder="Type text">
+                        </div>
+                      </div>
+                    
+                      
+                      <div class="col-12">
+                      {% if predict %}
+                        <p>Близкий таргет: {{ predict }}</p>
+                      {% else %}
+                        <p>&nbsp;</p>
+                      {% endif %}
+                    </div>
+
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Найти</button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        
+          <div class="album py-5 bg-light">
+            <div class="container justify-content-between ">
+              <div class="row">
+                <div class="col-sm-8 col-md-8">
+                    <h4 class="text-center">Система предсказания интересов пользователя</h4>
+                    <hr>
+                    <div class="text-justify">
+                      &nbsp Каждый пользователь в тот или иной момент времени может быть заинтересован в покупке товара или услуги. При этом для многих продуктов на рынке существует достаточно обширное предложение от различных компаний. Например, человеку понадобилась кредитная карта, и он начинает выбирать её среди многих банков РФ. При этом во многих случаях выбор человека завязан не только на выгодности предложения, но и на том, увидел ли он соответствующее предложение в своей ленте. Это означает, что компании заинтересованы в предсказании интереса человека к той или иной категории товара или услуга с целью превентивного выхода с предложением. Таким образом, такие организации повышают свои показатели продаж.
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-md-4">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                      <h4 class="text-center">Менторы</h4>
+                      <hr>
+                      <ul class="list-unstyled text-center">
+                        <li>Александр Мамаев</li>
+                        <li>Максим Кулаев</li>
+                      </ul>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                      <h4 class="text-center">Команда</h4>
+                      <hr>
+                      <ul class="list-unstyled text-center">
+                        <li>Улитина Маргарита</li>
+                        <li>Камаев Кирилл</li>
+                        <li>Половников Павел</li>
+                        <li>Алехин Владислав</li>  
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="container">
+        
+              <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top first_img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"></svg>
+                    <div class="card-body">
+                      <p class="card-text text-justify">
+                        На первых этапах работ нам необходимо выполнить кластеризацию и классификацтю ссылок по классам - именно это часть и лежит в основе данной интерактивной демки. На рисунке представлен график.
+                      </p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                        </div>
+                        <small class="text-muted">Кластеризация</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top second_img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"></svg>
+                    <div class="card-body">
+                      <p class="card-text text-justify">
+                        Основная работа работа проводилась в направлении предсказания интересов пользователей. Эту часть сложно сделтаь интерактивной, т.к. метрики снимались на реальных пользователей, а это долгий процесс (сборка занимала до 2 недель), а, главное, защищенный согласно NDA. На рисунке представлены результаты, полученые для относительно небольшого датасета.
+                      </p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                        </div>
+                        <small class="text-muted">TPR-FPR</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top third_img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"></svg>
+                    <div class="card-body">
+                      <p class="card-text text-justify">Cистема автоматизирована посредством аирфлоу. Посмотреть можно <a href="">здесь</a>.</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                        </div>
+                        <small class="text-muted">Еще</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="text-center col-lg-6 col-md-8 mx-auto">
+              <h1 class="fw-light">Назад, <a href="https://docs.google.com/presentation/d/1bYXJtMx9po5XG2-ca5ILAVP_Mwx8kebSfPUcAT67nOc/">к презентации</a> </h1>
+            <div>
+
+          </div>
+
+        </main>
+        
+        <footer class="text-muted py-5">
+          <div class="container">
+            <p class="float-end mb-1">
+              <a href="#">Back to top</a>
+            </p>
+            <p class="mb-1">&copy; Bootstrap</p>
+          </div>
+        </footer>
+
+      </body>
+</html>

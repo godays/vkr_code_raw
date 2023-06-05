@@ -1,0 +1,22 @@
+cfg:
+  logger_cfg_path: ./web_scrapper/cfg/logger_cfg.yml
+  raw_targets_path: ./web_scrapper/data/raw_targets.json
+  targets_path: ./web_scrapper/data/targets.json
+  failing_urls_path: ./web_scrapper/data/failed_urls.json
+  searcher_results_path: ./web_scrapper/data/searcher_results.json
+  selenium_urls_path: ./web_scrapper/data/selenium_urls.json
+  pages_path: ./web_scrapper/data/pages.json 
+  max_page_num: 10
+web_driver_cfg:
+    phantomjs: 
+        linux: "phantomjs"
+        mac: "phantomjs"
+        windows: "phantomjs.exe"
+    chrome:
+        linux: "chromedriver"
+        mac: "chromedriver"
+        windows: "chromedriver.exe"
+    firefox:
+        linux: ""
+        mac: ""
+        windows: ""

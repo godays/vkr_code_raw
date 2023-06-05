@@ -1,0 +1,13 @@
+matplotlib
+seaborn
+torch==1.8.1
+tensorflow
+sentencepiece==0.1.95
+transformers
+pandas==1.1.5
+numpy
+scikit-learn
+nltk
+pymorphy2
+umap-learn
+rutermextract

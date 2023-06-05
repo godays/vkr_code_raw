@@ -1,0 +1,32 @@
+version: 1
+formatters:
+    base_parser_fmt:
+        class: logging.Formatter
+        format: "%(asctime)s %(name)s %(levelname)s %(message)s"
+        datefmt: "%Y-%m-%d %H:%M:%S"
+    default:
+        format: '%(asctime)s %(levelname)-8s %(name)-15s: %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+handlers:
+    console_handler:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: default
+        stream: ext://sys.stdout
+    parser_handler:
+        class: logging.FileHandler
+        filename: parser_log.debug
+        formatter: base_parser_fmt
+        level: DEBUG
+    google_parser_handler:
+        class: logging.FileHandler
+        filename: parser_log.debug
+        formatter: base_parser_fmt
+        level: DEBUG
+loggers:
+    parser:
+        level: DEBUG
+        hardlers: [parser_handler, console_handler]
+root:
+    level: DEBUG
+    handlers: [parser_handler, console_handler]
